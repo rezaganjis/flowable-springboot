@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:flowable="http://flowable.org/bpmn"
+	targetNamespace="http://www.flowable.org/processdef">
+	<process id="BankingProcess"
+		name="A simple process to test Flowable and spring boot." isExecutable="true">
+		<startEvent id="start" />
+		<sequenceFlow sourceRef="start" targetRef="BankingProcessTask1" />
+		<userTask id="BankingProcessTask1"
+			name="start  flowable process "
+			flowable:candidateGroups="All" />
+		<sequenceFlow sourceRef="BankingProcessTask1"
+			targetRef="decision" />
+		<exclusiveGateway id="decision" />
+		<sequenceFlow sourceRef="decision"
+			targetRef="DepositSystemCall">
+			<conditionExpression xsi:type="tFormalExpression">
+		        <![CDATA[
+		          ${approved}
+		        ]]>
+			</conditionExpression>
+		</sequenceFlow>
+		<sequenceFlow sourceRef="decision"
+			targetRef="LoanSystemCall">
+			<conditionExpression xsi:type="tFormalExpression">
+		        <![CDATA[
+		          ${!approved}
+		        ]]>
+			</conditionExpression>
+		</sequenceFlow>
+		<serviceTask id="DepositSystemCall"
+			name="Publish the approved tutorial."
+			flowable:class="com.rgn.bpms.service.LoanService" />
+
+		<sequenceFlow sourceRef="DepositSystemCall"
+			targetRef="end" />
+
+		<serviceTask id="LoanSystemCall"
+			name="Send out rejection email"
+			flowable:class="com.rgn.bpms.service.DepositService" />
+		<sequenceFlow sourceRef="LoanSystemCall"
+			targetRef="end" />
+		<endEvent id="end" />
+	</process>
+</definitions>
