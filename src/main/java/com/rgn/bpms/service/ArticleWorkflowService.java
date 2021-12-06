@@ -1,9 +1,12 @@
 package com.rgn.bpms.service;
 
+import com.rgn.bpms.domain.Request;import com.rgn.bpms.domain.RequestType;import com.rgn.bpms.domain.RequestType;
 import com.rgn.bpms.domain.Request;
-import com.rgn.bpms.domain.RequestType;
+import liquibase.pro.packaged.F;
+import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
 import org.flowable.engine.repository.Deployment;
+import org.flowable.engine.repository.DeploymentProperties;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,12 +64,12 @@ public class ArticleWorkflowService {
         Deployment deployment =
                 repositoryService
                         .createDeployment()
-                        .addInputStream(model.getName() ,  model.getInputStream())
+                        .addInputStream(model.getOriginalFilename() , model.getInputStream())
                         .deploy();
         List<ProcessDefinition> list=repositoryService.createProcessDefinitionQuery().list();
         for(ProcessDefinition definition:list)
-            result=result.concat(definition.getName()).concat("  uploading from console");
-     return  result;
+            result=result.concat(definition.getName()).concat(" uploading from console");
+     return  result ;
 
      }
    }

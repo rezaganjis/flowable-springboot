@@ -1,8 +1,10 @@
 package com.rgn.bpms.controller;
 
+import com.rgn.bpms.domain.Request;import com.rgn.bpms.domain.RequestType;import com.rgn.bpms.domain.RequestType;
 import com.rgn.bpms.domain.Request;
-import com.rgn.bpms.domain.RequestType;
 import com.rgn.bpms.service.ArticleWorkflowService;
+import org.flowable.engine.test.Deployment;
+import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
