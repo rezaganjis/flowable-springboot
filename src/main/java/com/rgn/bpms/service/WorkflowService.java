@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ArticleWorkflowService {
+public class WorkflowService {
    @Autowired
     private RuntimeService runtimeService;
 
@@ -61,17 +61,15 @@ public class ArticleWorkflowService {
     public String deployProcessDefinition(MultipartFile model) throws IOException {
 
         String result="the process list is \n";
-
-
-        String deployment =
+        Deployment deployment =
                 repositoryService
                         .createDeployment()
-                        .addInputStream(model.getName() , model.getInputStream())
-                        .deploy().getName();
+                        .addInputStream(model.getOriginalFilename() , model.getInputStream())
+                        .deploy();
         List<ProcessDefinition> list=repositoryService.createProcessDefinitionQuery().list();
         for(ProcessDefinition definition:list)
-            result=result.concat(definition.getName()).concat("  uploading from console");
-     return  result +deployment;
+            result=result.concat(definition.getName()).concat(" uploading from console");
+     return  result ;
 
      }
    }

@@ -1,10 +1,7 @@
 package com.rgn.bpms.controller;
 
-import com.rgn.bpms.domain.Request;import com.rgn.bpms.domain.RequestType;import com.rgn.bpms.domain.RequestType;
-import com.rgn.bpms.domain.Request;
-import com.rgn.bpms.service.ArticleWorkflowService;
-import org.flowable.engine.test.Deployment;
-import org.flowable.task.api.Task;
+import com.rgn.bpms.domain.Request;import com.rgn.bpms.domain.RequestType;
+import com.rgn.bpms.service.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,9 +11,9 @@ import java.util.List;
 
 
 @RestController
-public class ArticleWorkflowController {
+public class WorkflowController {
     @Autowired
-    private ArticleWorkflowService service;
+    private WorkflowService service;
     @GetMapping("/startProcess")
     public void startProcess(Request request) {
         System.out.println(request);
