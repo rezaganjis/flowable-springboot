@@ -61,15 +61,17 @@ public class ArticleWorkflowService {
     public String deployProcessDefinition(MultipartFile model) throws IOException {
 
         String result="the process list is \n";
-        Deployment deployment =
+
+
+        String deployment =
                 repositoryService
                         .createDeployment()
-                        .addInputStream(model.getOriginalFilename() , model.getInputStream())
-                        .deploy();
+                        .addInputStream(model.getName() , model.getInputStream())
+                        .deploy().getName();
         List<ProcessDefinition> list=repositoryService.createProcessDefinitionQuery().list();
         for(ProcessDefinition definition:list)
-            result=result.concat(definition.getName()).concat(" uploading from console");
-     return  result ;
+            result=result.concat(definition.getName()).concat("  uploading from console");
+     return  result +deployment;
 
      }
    }
